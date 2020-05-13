@@ -44,7 +44,7 @@ app.get('/auth', (req, res) =>{
 
 app.get('/auth/redirect', (req, res) =>{
 	var options = {
-		uri: 'https://slack.com/api/oauth.access?code='
+		uri: 'https://slack.com/api/oauth.v2.access?code='
 		+req.query.code+
 		'&client_id='+client_id+'&client_secret='+client_secret,
 		method: 'GET'
