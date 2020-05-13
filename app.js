@@ -65,7 +65,9 @@ app.get('/auth/redirect', (req, res) =>{
 			{
 				if (err) throw err;
 				var dbo = db.db("apuser");
-				var testData = {'access_token':JSONresponse.access_token, 'scope':JSONresponse.scope, 'user_id':JSONresponse.user_id, 'team_name':JSONresponse.team_name, 'team_id':JSONresponse.team_id, 'bot_user_id':JSONresponse.bot_user_id, 'bot_access_token':JSONresponse.access_token, 'eureka':[], 'jenkins':[], 'zuul':[], 'vmamv':[]};
+				var testData = {'access_token':JSONresponse.access_token, 'scope':JSONresponse.scope, 'user_id':JSONresponse.authed_id,
+				 'team_name':JSONresponse.team.name, 'team_id':JSONresponse.team.id, 'bot_user_id':JSONresponse.bot_user_id,
+				  'bot_access_token':JSONresponse.access_token, 'eureka':[], 'jenkins':[], 'zuul':[], 'vmamv':[]};
 				dbo.collection("apuser").insertOne(testData);
 				//push data to mq
 				var pub = context.socket('PUBLISH');
