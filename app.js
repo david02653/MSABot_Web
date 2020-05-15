@@ -51,6 +51,8 @@ app.get('/auth/redirect', (req, res) =>{
 	}
 	request(options, (error, response, body) => {
 		var JSONresponse = JSON.parse(body)
+		console.log(">> print out what body is :");
+		console.log(body);
 		if (!JSONresponse.ok)
 		{
 			console.log(JSONresponse)
