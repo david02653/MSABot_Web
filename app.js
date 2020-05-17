@@ -44,15 +44,13 @@ app.get('/auth', (req, res) =>{
 
 app.get('/auth/redirect', (req, res) =>{
 	var options = {
-		uri: 'https://slack.com/api/oauth.v2.access?code='
+		uri: 'https://slack.com/api/oauth.access?code='
 		+req.query.code+
 		'&client_id='+client_id+'&client_secret='+client_secret,
 		method: 'GET'
 	}
 	request(options, (error, response, body) => {
 		var JSONresponse = JSON.parse(body)
-		console.log(">> print out what body is :");
-		console.log(body);
 		if (!JSONresponse.ok)
 		{
 			console.log(JSONresponse)
@@ -67,9 +65,7 @@ app.get('/auth/redirect', (req, res) =>{
 			{
 				if (err) throw err;
 				var dbo = db.db("apuser");
-				var testData = {'access_token':JSONresponse.access_token, 'scope':JSONresponse.scope, 'user_id':JSONresponse.authed_user.id,
-				 'team_name':JSONresponse.team.name, 'team_id':JSONresponse.team.id, 'bot_user_id':JSONresponse.bot_user_id,
-				  'bot_access_token':JSONresponse.access_token, 'eureka':[], 'jenkins':[], 'zuul':[], 'vmamv':[]};
+				var testData = {'access_token':JSONresponse.access_token, 'scope':JSONresponse.scope, 'user_id':JSONresponse.user_id, 'team_name':JSONresponse.team_name, 'team_id':JSONresponse.team_id, 'bot_user_id':JSONresponse.bot.bot_user_id, 'bot_access_token':JSONresponse.bot.bot_access_token, 'eureka':[], 'jenkins':[], 'zuul':[], 'vmamv':[]};
 				dbo.collection("apuser").insertOne(testData);
 				//push data to mq
 				var pub = context.socket('PUBLISH');
